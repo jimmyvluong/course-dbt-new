@@ -19,6 +19,7 @@ models:
       - name: order_id
         tests:
           - not_null
+          - positive_values
   - name: stg_greenery__order_items
     description: order information such as the products and quantity of products sold   
     columns:
