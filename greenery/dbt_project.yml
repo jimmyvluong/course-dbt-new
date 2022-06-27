@@ -36,3 +36,6 @@ models:
     # Config indicated by + and applies to all files under models/example/
     example:
       +materialized: view
+on-run-end: "{{ grant_usage_on_schema(schema='dbt_jimmy_l', role='reporting') }}"
+
+

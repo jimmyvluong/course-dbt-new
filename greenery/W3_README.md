@@ -26,6 +26,7 @@ GROUP BY 1;
 PART 2: We’re getting really excited about dbt macros after learning more about them and want to apply them to improve our dbt project. 
 
 PART 3: Post hook
+1. Thank you to Neftali Acosta - I referenced the code from his project here.
 
 PART 4: Install a package
 
@@ -49,4 +50,54 @@ create role reporting;
 select rolname from pg_roles;
 ```
 
+9.
+```
+{ % macro session_event_type_flag_dynamic() %}
+{% set event_types = dbt_utils.get_query_results_as_dict(
+    "select DISTINCT event_type from" ~ ref('stg_greenery__events')) 
+%}
+# {# This macro returns a dictionary of the form {column_name: (tuple_of_results)} #}
+
+--- This is what the dictionary looks like
+--- "event_type": ("page_view", "add_to_cart", "checkout" ...)
+for
+    session_id
+    -- get the event_type KEY from event_types using "event_types['event_type']"
+    -- remember that all dictionaries have KEY:VALUE pairs
+    -- so here we are looping through the tuple of ("page_view", "add_to_cart", "checkout" ...)
+    {% for event_type in event_types['event_type'] %}
+        , MAX(case when event_type = '{{event_type}}' then 1 else 0 end) as {{event_type}}_present,
+    {% endfor %}
+from {{ ref('stg_greenery__events') }}
+group by session_id
+{% endmacro %}
+
+-- query for all unique event_type
+-- ~ is string concatenation in Jinja
+```
+10.
+```
+{ % macro session_event_type_flag_simple() %}
+
+{% set event_types = ["page_view", "add_to_cart", "checkout"] %}
+
+-- for each session_id
+for
+    session_id
+    -- for each of the 3 event_type
+    { for event_type in event_types %}
+    -- when the event_type is the event_type in the variable, make a 1 flag
+        , MAX(case when event_type = '{{event_type}}' then 1 else 0 end) as {{event_type}}_present,
+    {% endfor %}
+from {{ ref('stg_events') }}
+-- then group by session_id
+group by session_id
+
+-- what it looks like
+-- session_id, page_view_present, add_to_cart_present, checkout_present
+
+
+-- Set this event_types variable equal to ["1", "2", "3"] etc.
+{% endmacro %}
+```
 

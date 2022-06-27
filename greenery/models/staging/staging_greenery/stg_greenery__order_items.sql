@@ -12,7 +12,7 @@ WITH src_greenery__order_items AS (
   SELECT
   order_id,
   product_id,
-  quantity
+  quantity AS order_quantity
   FROM src_greenery__order_items
 )
 
