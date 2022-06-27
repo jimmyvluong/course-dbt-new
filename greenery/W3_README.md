@@ -33,6 +33,7 @@ PART 3: Post hook
 PART 4: Install a package
 1. I installed dbt-expectations but I struggled to implement a test that applies to an entire model. 
 2. I did implement the dbt-expectations test `dbt_expectations.expect_column_to_exist`
+
 PART 5: Make a new DAG.
 https://github.com/jimmyvluong/course-dbt/blob/main/greenery/dbt-dag-week3-updated.png
 ---
@@ -40,11 +41,10 @@ https://github.com/jimmyvluong/course-dbt/blob/main/greenery/dbt-dag-week3-updat
 1. `~` is string concatenation in Jinja
 2. `schema.yml` files are cheap, I think the yml by mart makes sense (I actually split them all out as a personal preference to limit long running yml
 3. No need to declare `ref` again in `JOINS` once you `ref` a model once in a `SELECT` statement.
-4. With the way I have it currently for my columns - wouldn’t the SQL break if I change the name of stg_greneery__addresses file?
-    5.  it would break but namespace changes don’t happen that frequently and should just be a find all and replace in the model (that’s how I’ve handled it!). I think it’s important to be verbose in your selects so people know exactly where these cols are coming from 
-6. Quick link to dbt-utils github macros: https://github.com/dbt-labs/dbt-utils/blob/main/macros/sql/get_query_results_as_dict.sql
-7. Operations are a way to run/invoke macros outside the context of a dbt run. This is called a run-operation. Certain macros may be helpful to run without needing to run a dbt model.
-8. How to create a role:
+4. Namespace changes don’t happen that frequently and should just be a find all and replace in the model (that’s how I’ve handled it!). I think it’s important to be verbose in your selects so people know exactly where these cols are coming from - Jake (TA)
+5. Quick link to dbt-utils github macros: https://github.com/dbt-labs/dbt-utils/blob/main/macros/sql/get_query_results_as_dict.sql
+6. Operations are a way to run/invoke macros outside the context of a dbt run. This is called a run-operation. Certain macros may be helpful to run without needing to run a dbt model.
+7. How to create a role:
 ```sql
 psql
 create role reporting;
@@ -53,7 +53,7 @@ create role reporting;
 select rolname from pg_roles;
 ```
 
-9. Dynamic event_types example
+8. Dynamic event_types example
 ```sql
 { % macro session_event_type_flag_dynamic() %}
 {% set event_types = dbt_utils.get_query_results_as_dict(
@@ -78,7 +78,7 @@ group by session_id
 -- query for all unique event_type
 -- ~ is string concatenation in Jinja
 ```
-10. Hard-coded event_types example
+9. Hard-coded event_types example
 ```sql
 { % macro session_event_type_flag_simple() %}
 
@@ -104,6 +104,6 @@ group by session_id
 {% endmacro %}
 ```
 
-11. I made a mistake by not realizing that my dim_products.sql model had 862 rows because I left joined the products table with the order_items table.
-12. How to create custom tests or override tests shipped with dbt https://www.youtube.com/watch?v=dn6FiXlzO8U
-13. Note that `fct_sessions` likely needs to have product information removed.
+10. I made a mistake by not realizing that my dim_products.sql model had 862 rows because I left joined the products table with the order_items table.
+11. How to create custom tests or override tests shipped with dbt https://www.youtube.com/watch?v=dn6FiXlzO8U
+12. Note that `fct_sessions` likely needs to have product information removed.
