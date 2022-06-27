@@ -11,6 +11,6 @@ select
     , stg_greenery__products.inventory
     , stg_greenery__order_items.order_id
     , stg_greenery__order_items.order_quantity
-from {{ ref('stg_greenery__products') }}
-left join {{ ref('stg_greenery__order_items') }}
-on stg_greenery__products.product_id = stg_greenery__order_items.product_id
+from {{ ref('stg_greenery__order_items') }}
+left join {{ ref('stg_greenery__products') }}
+on stg_greenery__order_items.product_id = stg_greenery__products.product_id

@@ -2,23 +2,25 @@ PART 1: Create new models to answer the first two questions (answer questions in
 
 - What is our overall conversion rate?
     - Conversion rate is defined as the # of unique sessions with a purchase event / total number of unique sessions. 
-    - 62%
+> 62%
 
-```
-SELECT SUM(checkout)/COUNT(distinct session_id)::float AS conversion_rate
-FROM dbt_jimmy_l.fct_sessions;
+```sql
+SELECT
+  product_id
+  , ROUND(SUM(add_to_cart) / count(distinct session_id),2) AS product_conversion_rate
+  FROM {{ ref('int_session_events_agg') }} 
+  GROUP BY 1
 ```
 - What is our conversion rate by product?
     - Conversion rate by product is defined as the # of unique sessions with a purchase event of that product / total number of unique sessions that viewed that product
 
-```
+```sql
 --- assume add to cart has NO cart abandonment
---- NEED TO ADD PRODUCT_ID to fct_sessions
-SELECT 
-product_id
-, SUM(checkout)/COUNT(distinct session_id)::float AS conversion_rate
-FROM dbt_jimmy_l.fct_sessions
-GROUP BY 1;
+SELECT
+  product_id
+  , ROUND(SUM(add_to_cart) / count(distinct session_id),2) AS product_conversion_rate
+  FROM {{ ref('int_session_events_agg') }} 
+  GROUP BY 1
 ```
 
 ---
@@ -29,9 +31,10 @@ PART 3: Post hook
 1. Thank you to Neftali Acosta - I referenced the code from his project here.
 
 PART 4: Install a package
-
+1. I installed dbt-expectations but I struggled to implement a test that applies to an entire model. 
+2. I did implement the dbt-expectations test `dbt_expectations.expect_column_to_exist`
 PART 5: Make a new DAG.
-
+https://github.com/jimmyvluong/course-dbt/blob/main/greenery/dbt-dag-week3-updated.png
 ---
 **Useful things I learned this week**
 1. `~` is string concatenation in Jinja
@@ -50,8 +53,8 @@ create role reporting;
 select rolname from pg_roles;
 ```
 
-9.
-```
+9. Dynamic event_types example
+```sql
 { % macro session_event_type_flag_dynamic() %}
 {% set event_types = dbt_utils.get_query_results_as_dict(
     "select DISTINCT event_type from" ~ ref('stg_greenery__events')) 
@@ -75,8 +78,8 @@ group by session_id
 -- query for all unique event_type
 -- ~ is string concatenation in Jinja
 ```
-10.
-```
+10. Hard-coded event_types example
+```sql
 { % macro session_event_type_flag_simple() %}
 
 {% set event_types = ["page_view", "add_to_cart", "checkout"] %}
@@ -101,3 +104,6 @@ group by session_id
 {% endmacro %}
 ```
 
+11. I made a mistake by not realizing that my dim_products.sql model had 862 rows because I left joined the products table with the order_items table.
+12. How to create custom tests or override tests shipped with dbt https://www.youtube.com/watch?v=dn6FiXlzO8U
+13. Note that `fct_sessions` likely needs to have product information removed.

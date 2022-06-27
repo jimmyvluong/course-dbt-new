@@ -17,9 +17,7 @@ WITH session_length AS (
   -- aggregate session information from int_session_events_agg
 -- Calculate the session length
 select
-    dim_products.product_id
-    , dim_products.product_name
-    , int_session_events_agg.session_id
+    int_session_events_agg.session_id
     , int_session_events_agg.user_id
     , dim_users.first_name
     , dim_users.last_name
@@ -40,6 +38,4 @@ left join {{ ref('dim_users') }}
   on int_session_events_agg.user_id = dim_users.user_id
 left join session_length
   on int_session_events_agg.session_id = session_length.session_id
-left join {{ ref('dim_products') }}
-  on int_session_events_agg.product_id = dim_products.product_id
     

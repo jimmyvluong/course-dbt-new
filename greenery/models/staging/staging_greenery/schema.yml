@@ -2,11 +2,14 @@ version: 2
 
 models:
   - name: stg_greenery__addresses
-    description: Addresses of customers 
+    description: Addresses of customers
     columns:
       - name: address_id
         tests:
           - not_null
+      - name: zipcode
+        tests:
+          - dbt_expectations.expect_column_to_exist
   - name: stg_greenery__users
     description: Name and contact information of customers   
     columns:
@@ -19,7 +22,6 @@ models:
       - name: order_id
         tests:
           - not_null
-          - positive_values
   - name: stg_greenery__order_items
     description: order information such as the products and quantity of products sold   
     columns:
