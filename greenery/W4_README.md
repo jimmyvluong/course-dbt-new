@@ -20,6 +20,7 @@
     - `tracking_id`, `shipping_service`, and `status`
     - How it works: the snapshot checks the `status` column, and if it changes the snapshot will create this new row.
 
+2. 
 ---
 **Useful things I learned this week**
 
@@ -59,3 +60,4 @@
 
 {% endsnapshot %}
 ```
+2. dbt exposures documentation: https://docs.getdbt.com/docs/building-a-dbt-project/exposures#declaring-an-exposure

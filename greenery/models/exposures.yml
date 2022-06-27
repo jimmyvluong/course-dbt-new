@@ -1,0 +1,13 @@
+version: 2
+
+exposures:  
+  - name: Product Funnel Dashboard
+    description: >
+      Models that are critical to our product funnel dashboard
+    type: dashboard
+    maturity: high
+    owner:
+      name: Jimmy
+      email: jimmy@greenery.com
+    depends_on:
+      - ref('fct_sessions')
