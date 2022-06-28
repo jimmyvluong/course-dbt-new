@@ -61,3 +61,22 @@
 {% endsnapshot %}
 ```
 2. dbt exposures documentation: https://docs.getdbt.com/docs/building-a-dbt-project/exposures#declaring-an-exposure
+3. Refactoring legacy SQL to dbt: https://docs.getdbt.com/guides/getting-started/learning-more/refactoring-legacy-sql
+4. Indexing tables: https://dataschool.com/sql-optimization/how-indexing-works/
+- Indexes allow us to create sorted lists without having to create all new sorted tables, which would take up a lot of storage space.
+```sql
+# To test the speed of a query:
+EXPLAIN ANALYZE SELECT * FROM friends WHERE name = 'Blake';
+# Testing the speed of Mukunda's table with an index.
+EXPLAIN ANALYZE SELECT * FROM dbt_jimmy_l.dim_users_mukunda 
+WHERE 
+  first_name = 'Eileen' 
+and
+  country = 'United States';
+# Testing the speed of my table without an index.
+EXPLAIN ANALYZE SELECT * FROM dbt_jimmy_l.dim_users_no_index
+WHERE 
+  first_name = 'Eileen' 
+and
+  country = 'United States';
+```

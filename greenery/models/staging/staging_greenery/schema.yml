@@ -3,6 +3,9 @@ version: 2
 models:
   - name: stg_greenery__addresses
     description: Addresses of customers
+    tests:
+    - dbt_expectations.expect_table_column_count_to_equal:
+        value: 7
     columns:
       - name: address_id
         tests:
