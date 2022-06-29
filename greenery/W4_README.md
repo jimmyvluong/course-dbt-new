@@ -185,4 +185,5 @@ FROM user_order_count;
 ```
 > 
 |number_of_customers_ordering_2_or_more|number_of_total_customers|percent_2_or_more_orders|
+|:---|:---|:---|
 |99|124|0.79|
