@@ -1,3 +1,4 @@
+-- not sure if this model is useful right now
 {{
   config(
     materialized = 'table'

@@ -46,6 +46,12 @@ models:
   - name: stg_greenery__events
     description: Event information such as when a user goes to checkout for an order  
     columns:
+      - name: event_type
+        description: there are 4 event types - page_view, add_to_cart, checkout, package_shipped
+      - name: order_id
+        description: order_id only present if event_type IS checkout or package_shipped
+      - name: product_id
+        description: product_id only present if event_type IS add_to_cart of page_view
       - name: event_id
         tests:
           - not_null

@@ -13,15 +13,15 @@ WITH session_length AS (
     GROUP BY 1
 )
 -- Add in:
-  -- user information from dim_users
+  -- user information from dim_users_addresses
   -- aggregate session information from int_session_events_agg
 -- Calculate the session length
 select
     int_session_events_agg.session_id
     , int_session_events_agg.user_id
-    , dim_users.first_name
-    , dim_users.last_name
-    , dim_users.email
+    , dim_users_addresses.first_name
+    , dim_users_addresses.last_name
+    , dim_users_addresses.email
     , int_session_events_agg.page_view
     , int_session_events_agg.add_to_cart
     , int_session_events_agg.checkout
@@ -34,8 +34,8 @@ select
       as session_length_minutes
 
 from {{ ref ('int_session_events_agg') }}
-left join {{ ref('dim_users') }}
-  on int_session_events_agg.user_id = dim_users.user_id
+left join {{ ref('dim_users_addresses') }}
+  on int_session_events_agg.user_id = dim_users_addresses.user_id
 left join session_length
   on int_session_events_agg.session_id = session_length.session_id
     
