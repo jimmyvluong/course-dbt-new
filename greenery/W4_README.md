@@ -144,3 +144,45 @@ and
 ```
 5. Adding images to markdown: https://marinegeo.github.io/2018-08-10-adding-images-markdown/#:~:text=Images%20can%20be%20added%20to,to%20show%20on%20mouseover%22)%20.
 - ![alt text for screen readers](/path/to/image.png "Text to show on mouseover").
+-----
+Going back to do some needed exploratory data analysis.
+- A good table to use to explore order counts is int_orders_promos which is simply the orders table with a promo flag.
+1. How many orders are there in total?
+```sql
+SELECT COUNT(*) FROM dbt_jimmy_l.int_orders_promos;
+```
+> There are 361 total orders.
+
+2. How many users ordered at least 1 time?
+```sql
+SELECT count(DISTINCT user_id)
+from dbt_jimmy_l.int_orders_promos;
+```
+> 124 unique users orderd at least 1 time.
+
+3. How many orders are there per customer?
+```sql
+SELECT user_id, count(1) as number_of_orders
+from dbt_jimmy_l.int_orders_promos
+group by 1
+order by 2 desc;
+```
+> There are anywhere from 1 to 8 orders per customer.
+
+4. What percent of customers ordered 2 or more times?
+```sql
+WITH user_order_count AS (
+  SELECT user_id, count(1) as number_of_orders
+  from dbt_jimmy_l.int_orders_promos
+  group by 1
+  order by 2 desc
+)
+
+SELECT SUM(CASE WHEN number_of_orders > 1 THEN 1 else 0 end) AS number_of_customers_ordering_2_or_more
+, SUM(1) number_of_total_customers
+, SUM(CASE WHEN number_of_orders > 1 THEN 1.0 else 0 end)/ SUM(1) AS percent_2_or_more_orders
+FROM user_order_count;
+```
+> 
+|number_of_customers_ordering_2_or_more|number_of_total_customers|percent_2_or_more_orders|
+|99|124|0.79|
