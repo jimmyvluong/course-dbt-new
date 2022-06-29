@@ -20,7 +20,7 @@
 - dbt snapshot created another row that shows updated field values such as:
     - `tracking_id`, `shipping_service`, and `status`
     - How it works: the snapshot checks the `status` column, and if it changes the snapshot will create this new row.
-![Where snapshots are created]()
+![Where snapshots are created](https://github.com/jimmyvluong/course-dbt/blob/3cd29c6b2d7985184dc73bb9de00071af6dabbb8/greenery/where_snapshots_are_created.png "Where snapshots are created.")
 
 ```sql
 # SQL to update the records
