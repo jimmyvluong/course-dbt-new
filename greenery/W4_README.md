@@ -146,6 +146,8 @@ and
 - ![alt text for screen readers](/path/to/image.png "Text to show on mouseover").
 -----
 Going back to do some needed exploratory data analysis.
+
+**ORDERS**
 - A good table to use to explore order counts is int_orders_promos which is simply the orders table with a promo flag.
 1. How many orders are there in total?
 ```sql
@@ -183,7 +185,18 @@ SELECT SUM(CASE WHEN number_of_orders > 1 THEN 1 else 0 end) AS number_of_custom
 , SUM(CASE WHEN number_of_orders > 1 THEN 1.0 else 0 end)/ SUM(1) AS percent_2_or_more_orders
 FROM user_order_count;
 ```
-> 
 |number_of_customers_ordering_2_or_more|number_of_total_customers|percent_2_or_more_orders|
 |:---|:---|:---|
 |99|124|0.79|
+---
+**EVENTS**
+- No session can have a checkout event_type if it DID NOT have an add_to_cart event_type as well.
+1. How many total event_id are there?
+> 3,553
+2. What are the different event_type?
+```sql
+SELECT distinct event_type FROM dbt_jimmy_l.stg_greenery__events;
+```
+- There are 4 event_type
+- (page_view, add_to_cart, checkout, package_shipped)
+3. 

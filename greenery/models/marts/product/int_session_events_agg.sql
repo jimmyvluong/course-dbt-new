@@ -3,7 +3,9 @@
     materialized = 'table'
   )
 }}
-
+-- A session_id can have multiple event_id. This means a customer can start a session and take multiple actions, aka making multiple event_id's.
+-- One session_id will always be expected to have the same user_id
+-- Here we flag what event_type
 SELECT
   stg_greenery__events.session_id
   , stg_greenery__events.user_id
