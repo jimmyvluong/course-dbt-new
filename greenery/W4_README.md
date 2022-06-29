@@ -57,8 +57,33 @@ OR order_id = '05202733-0e17-4726-97c2-0520c024ab85';
 
 ![The new records in the orders_status snapshot](https://github.com/jimmyvluong/course-dbt/blob/242dea5d5b447a024e3309bc7d91026b67eaaaa0/greenery/snapshot_example.png "orders_status snapshot")
 
-2. 
----
+2. Modeling challenge
+
+**Exposures**
+- Exposures are important to implement so that analysts working in dbt know what downstream impacts changes to models will have outside of just dbt runs. 
+- If a run fails or a test errors, it’s important to know how that will affect things like critical reporting dashboards or a data science algorithm.
+- With exposures, we know which models are most critical to the business and can make sure that the right stakeholders are notified if something goes wrong.
+```yml
+version: 2
+
+exposures:  
+  - name: Product Funnel Dashboard
+    description: >
+      Models that are critical to our product funnel dashboard
+    type: dashboard
+    maturity: high
+    owner:
+      name: Jimmy
+      email: jimmy@greenery.com
+    depends_on:
+      - ref('fct_sessions')
+```
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+
 **Useful things I learned this week**
 
 1. There are TWO main strategies for snapshots.
