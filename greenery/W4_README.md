@@ -55,6 +55,8 @@ WHERE order_id = '914b8929-e04a-40f8-86ee-357f2be3a2a2'
 OR order_id = '05202733-0e17-4726-97c2-0520c024ab85';
 ```
 
+![The new records in the orders_status snapshot](https://github.com/jimmyvluong/course-dbt/blob/3cd29c6b2d7985184dc73bb9de00071af6dabbb8/greenery/snapshot_example.png "orders_status snapshot")
+
 2. 
 ---
 **Useful things I learned this week**
