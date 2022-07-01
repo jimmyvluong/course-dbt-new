@@ -82,6 +82,20 @@ SELECT
 
 SELECT * FROM funnel;
 ```
+An interesting finding is that by state, Georgia has significant drop from add_to_cart to checkout rates
+```sql
+SELECT
+    state
+  , SUM(checkout) as checkount_count
+  , SUM(add_to_cart) as add_to_cart_count
+  , SUM(page_view) as page_view_count
+  , ROUND((SUM(add_to_cart::numeric)/SUM(page_view::numeric)),2) as add_to_cart_rate
+  , ROUND((SUM(checkout::numeric)/SUM(add_to_cart::numeric)),2) as checkout_rate
+FROM dbt_jimmy_l.int_session_events_agg_user
+GROUP BY 1
+ORDER BY checkout_rate ASC;
+```
+![Georgia's low checkout rate](https://github.com/jimmyvluong/course-dbt/blob/242dea5d5b447a024e3309bc7d91026b67eaaaa0/greenery/snapshot_example.png "Georgia's low checkout rate")
 **Exposures**
 - Exposures are important to implement so that analysts working in dbt know what downstream impacts changes to models will have outside of just dbt runs. 
 - If a run fails or a test errors, it’s important to know how that will affect things like critical reporting dashboards or a data science algorithm.

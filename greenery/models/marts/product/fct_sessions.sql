@@ -19,9 +19,9 @@ WITH session_length AS (
 select
     int_session_events_agg.session_id
     , int_session_events_agg.user_id
-    , dim_users_addresses.first_name
-    , dim_users_addresses.last_name
-    , dim_users_addresses.email
+    -- , dim_users_addresses.first_name
+    -- , dim_users_addresses.last_name
+    -- , dim_users_addresses.email
     , int_session_events_agg.page_view
     , int_session_events_agg.add_to_cart
     , int_session_events_agg.checkout
@@ -34,8 +34,8 @@ select
       as session_length_minutes
 
 from {{ ref ('int_session_events_agg') }}
-left join {{ ref('dim_users_addresses') }}
-  on int_session_events_agg.user_id = dim_users_addresses.user_id
+-- left join {{ ref('dim_users_addresses') }}
+--   on int_session_events_agg.user_id = dim_users_addresses.user_id
 left join session_length
   on int_session_events_agg.session_id = session_length.session_id
     
