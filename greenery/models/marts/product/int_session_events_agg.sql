@@ -9,7 +9,6 @@
 SELECT
   stg_greenery__events.session_id
   , stg_greenery__events.user_id
-  --, created_at_utc
   , stg_greenery__events.product_id
   , stg_greenery__products.product_name
   , SUM(CASE WHEN stg_greenery__events.event_type = 'add_to_cart' then 1 else 0 end) AS add_to_cart

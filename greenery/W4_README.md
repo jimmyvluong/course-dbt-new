@@ -58,7 +58,30 @@ OR order_id = '05202733-0e17-4726-97c2-0520c024ab85';
 ![The new records in the orders_status snapshot](https://github.com/jimmyvluong/course-dbt/blob/242dea5d5b447a024e3309bc7d91026b67eaaaa0/greenery/snapshot_example.png "orders_status snapshot")
 
 2. Modeling challenge
+```sql
+with event_counts as (
+SELECT
+  stg_greenery__events.session_id
+  , MAX(CASE WHEN stg_greenery__events.event_type = 'add_to_cart' then 1 else 0 end) AS add_to_cart
+  , MAX(CASE WHEN stg_greenery__events.event_type = 'checkout' then 1 else 0 end) AS checkout
+  , MAX(CASE WHEN stg_greenery__events.event_type = 'page_view' then 1 else 0 end) AS page_view
+  , MAX(CASE WHEN stg_greenery__events.event_type = 'package_shipped' then 1 else 0 end) AS package_shipped
+FROM dbt_jimmy_l.stg_greenery__events
+GROUP BY 1
+)
+,
+funnel as (
+SELECT
+    SUM(checkout) as checkount_count
+  , SUM(add_to_cart) as add_to_cart_count
+  , SUM(page_view) as page_view_count
+  , (SUM(add_to_cart::float)/SUM(page_view::float)) as add_to_cart_rate
+  , (SUM(checkout::float)/SUM(add_to_cart::float)) as checkout_rate
+  FROM event_counts
+)
 
+SELECT * FROM funnel;
+```
 **Exposures**
 - Exposures are important to implement so that analysts working in dbt know what downstream impacts changes to models will have outside of just dbt runs. 
 - If a run fails or a test errors, it’s important to know how that will affect things like critical reporting dashboards or a data science algorithm.
