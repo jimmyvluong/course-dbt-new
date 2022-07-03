@@ -56,8 +56,8 @@ OR order_id = '05202733-0e17-4726-97c2-0520c024ab85';
 ```
 
 ![The new records in the orders_status snapshot](https://github.com/jimmyvluong/course-dbt/blob/242dea5d5b447a024e3309bc7d91026b67eaaaa0/greenery/snapshot_example.png "orders_status snapshot")
-
-2. Modeling challenge
+---
+2. **Modeling challenge**
 - Note: I created a simple model called `funnel_users.sql` that has the overall product funnel metrics already calculated. It is likely best practice to leave this step up to the BI tool or the analyst. 
 - The more interesting model is `int_session_events_agg_user.sql`, which has user information and can be broken down by geography.
 
@@ -102,7 +102,7 @@ ORDER BY checkout_rate ASC;
 ```
 ![Georgia's low checkout rate](https://github.com/jimmyvluong/course-dbt/blob/edc3f75d5806ce45255cab063fa54081907b39f5/greenery/georgia_low_checkout_rate.png "Georgia's low checkout rate")
 
-
+![Final DAG](https://github.com/jimmyvluong/course-dbt/blob/fd8b190c8f7734ad02fb4b2c1c6756d77d12b757/greenery/final_DAG_week_4.png "Final DAG")
 
 **Exposures**
 - Exposures are important to implement so that analysts working in dbt know what downstream impacts changes to models will have outside of just dbt runs. 
@@ -123,6 +123,17 @@ exposures:
     depends_on:
       - ref('fct_sessions')
 ```
+---
+3. **Reflection**
+
+1. If your organization is thinking about using dbt, how would you pitch the value of dbt/analytics engineering to a decision maker at your organization?
+	- There is a legacy project I have inherited ownership of built using SSIS (SQL Server Integration Services) that I need to untangle and understand. Not even counting the other benefits of dbt - DAGs alone would clear up the logic of how these models are connected. I wonder if I should convert it to a dbt project. However, the person that inherits this project from me will also need to know dbt.
+	- I see a switch to dbt as making our organization ready for future integrations with a modern data warehouse
+2. If you are thinking about moving to analytics engineering, what skills have you picked that give you the most confidence in pursuing this next step?
+	- One of the main reasons I took this course is to get a sense of what analytics engineering looks like. I have a much better picture now.
+	- I like how close you can be to the end product
+	- Learning dbt is also a great way to practice software engineering and data modeling best practices (version control, documentation, testing, naming conventions, model layering, etc.)
+	- The next step for me is to standup a project and connect it to a trial Snowflake warehouse
 ------------------------------------------------------
 ------------------------------------------------------
 ------------------------------------------------------
