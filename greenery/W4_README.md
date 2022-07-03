@@ -58,6 +58,9 @@ OR order_id = '05202733-0e17-4726-97c2-0520c024ab85';
 ![The new records in the orders_status snapshot](https://github.com/jimmyvluong/course-dbt/blob/242dea5d5b447a024e3309bc7d91026b67eaaaa0/greenery/snapshot_example.png "orders_status snapshot")
 
 2. Modeling challenge
+- Note: I created a simple model called `funnel_users.sql` that has the overall product funnel metrics already calculated. It is likely best practice to leave this step up to the BI tool or the analyst. 
+- The more interesting model is `int_session_events_agg_user.sql`, which has user information and can be broken down by geography.
+
 ```sql
 with event_counts as (
 SELECT
@@ -82,6 +85,7 @@ SELECT
 
 SELECT * FROM funnel;
 ```
+
 An interesting finding is that by state, Georgia has significant drop from add_to_cart to checkout rates
 ```sql
 SELECT
@@ -96,6 +100,7 @@ GROUP BY 1
 ORDER BY checkout_rate ASC;
 ```
 ![Georgia's low checkout rate](https://github.com/jimmyvluong/course-dbt/blob/edc3f75d5806ce45255cab063fa54081907b39f5/greenery/georgia_low_checkout_rate.png "Georgia's low checkout rate")
+
 **Exposures**
 - Exposures are important to implement so that analysts working in dbt know what downstream impacts changes to models will have outside of just dbt runs. 
 - If a run fails or a test errors, it’s important to know how that will affect things like critical reporting dashboards or a data science algorithm.
@@ -118,13 +123,13 @@ exposures:
 ------------------------------------------------------
 ------------------------------------------------------
 ------------------------------------------------------
-------------------------------------------------------
-------------------------------------------------------
 
 **Useful things I learned this week**
 
 1. There are TWO main strategies for snapshots.
 - Timestamp/updated at
+- If the configured updated_at timestamp for a row is more recent than the last time the snapshot ran, then dbt will invalidate the old record and record the new one. 
+- If the timestamps are unchanged, then dbt will not take any action in the snapshot. 
 ```sql
 {% snapshot inventory_snapshot %}
 
@@ -142,7 +147,7 @@ exposures:
 
 {% endsnapshot %}
 ```
-- Check columns
+- Check columns (check if a column value changed)
 ```sql
 {% snapshot orders_snapshot %}
 
@@ -181,8 +186,12 @@ and
 ```
 5. Adding images to markdown: https://marinegeo.github.io/2018-08-10-adding-images-markdown/#:~:text=Images%20can%20be%20added%20to,to%20show%20on%20mouseover%22)%20.
 - ![alt text for screen readers](/path/to/image.png "Text to show on mouseover").
+
+6. Artifacts (need to add to this section)
 -----
-Going back to do some needed exploratory data analysis.
+-----
+-----
+**Going back to do some needed exploratory data analysis.**
 
 **ORDERS**
 - A good table to use to explore order counts is int_orders_promos which is simply the orders table with a promo flag.
@@ -236,4 +245,4 @@ SELECT distinct event_type FROM dbt_jimmy_l.stg_greenery__events;
 ```
 - There are 4 event_type
 - (page_view, add_to_cart, checkout, package_shipped)
-3. 
+---
