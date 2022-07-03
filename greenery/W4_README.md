@@ -132,7 +132,7 @@ exposures:
   - I see a switch to dbt as making our organization ready for future integrations with a modern data warehouse
 
 - If you are thinking about moving to analytics engineering, what skills have you picked that give you the most confidence in pursuing this next step?
-  - I took this course is to get a sense of what analytics engineering looks like. I have a much better picture now.
+  - I took this course to get a sense of what analytics engineering looks like. I have a much better picture now.
   - If I move into analytics engineering I want to be in a position where I can be close to the end product
   - Learning dbt is also a great way to practice software engineering and data modeling best practices (version control, documentation, testing, naming conventions, model layering, etc.)
   - The next step for me is to standup a project and connect it to a trial Snowflake warehouse
