@@ -126,12 +126,12 @@ exposures:
 ---
 3. **Reflection**
 
-1. If your organization is thinking about using dbt, how would you pitch the value of dbt/analytics engineering to a decision maker at your organization?
+  1. If your organization is thinking about using dbt, how would you pitch the value of dbt/analytics engineering to a decision maker at your organization?
 	- There is a legacy project I have inherited ownership of built using SSIS (SQL Server Integration Services) that I need to untangle and understand. Not even counting the other benefits of dbt - DAGs alone would clear up the logic of how these models are connected. I wonder if I should convert it to a dbt project. However, the person that inherits this project from me will also need to know dbt.
 	- I see a switch to dbt as making our organization ready for future integrations with a modern data warehouse
-2. If you are thinking about moving to analytics engineering, what skills have you picked that give you the most confidence in pursuing this next step?
-	- One of the main reasons I took this course is to get a sense of what analytics engineering looks like. I have a much better picture now.
-	- I like how close you can be to the end product
+  2. If you are thinking about moving to analytics engineering, what skills have you picked that give you the most confidence in pursuing this next step?
+	- I took this course is to get a sense of what analytics engineering looks like. I have a much better picture now.
+	- If I move into analytics engineering I want to be in a position where I can be close to the end product
 	- Learning dbt is also a great way to practice software engineering and data modeling best practices (version control, documentation, testing, naming conventions, model layering, etc.)
 	- The next step for me is to standup a project and connect it to a trial Snowflake warehouse
 ------------------------------------------------------
@@ -199,7 +199,7 @@ and
   country = 'United States';
 ```
 5. Adding images to markdown: https://marinegeo.github.io/2018-08-10-adding-images-markdown/#:~:text=Images%20can%20be%20added%20to,to%20show%20on%20mouseover%22)%20.
-- ![alt text for screen readers](/path/to/image.png "Text to show on mouseover").
+- Syntax "![alt text for screen readers](/path/to/image.png "Text to show on mouseover")."
 
 6. Artifacts (need to add to this section)
 -----
