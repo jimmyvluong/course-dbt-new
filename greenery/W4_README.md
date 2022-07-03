@@ -75,7 +75,7 @@ GROUP BY 1
 ,
 funnel as (
 SELECT
-    SUM(checkout) as checkount_count
+    SUM(checkout) as checkout_count
   , SUM(add_to_cart) as add_to_cart_count
   , SUM(page_view) as page_view_count
   , (SUM(add_to_cart::float)/SUM(page_view::float)) as add_to_cart_rate
@@ -85,12 +85,13 @@ SELECT
 
 SELECT * FROM funnel;
 ```
+![Overall product funnel](https://github.com/jimmyvluong/course-dbt/blob/74f04270e5fa38e73ef3358c7e611566f596af2c/greenery/overall_product_funnel.png "Overall product funnel")
 
 An interesting finding is that by state, Georgia has significant drop from add_to_cart to checkout rates
 ```sql
 SELECT
     state
-  , SUM(checkout) as checkount_count
+  , SUM(checkout) as checkout_count
   , SUM(add_to_cart) as add_to_cart_count
   , SUM(page_view) as page_view_count
   , ROUND((SUM(add_to_cart::numeric)/SUM(page_view::numeric)),2) as add_to_cart_rate
