@@ -95,7 +95,7 @@ FROM dbt_jimmy_l.int_session_events_agg_user
 GROUP BY 1
 ORDER BY checkout_rate ASC;
 ```
-![Georgia's low checkout rate](https://github.com/jimmyvluong/course-dbt/blob/242dea5d5b447a024e3309bc7d91026b67eaaaa0/greenery/snapshot_example.png "Georgia's low checkout rate")
+![Georgia's low checkout rate](https://github.com/jimmyvluong/course-dbt/blob/edc3f75d5806ce45255cab063fa54081907b39f5/greenery/georgia_low_checkout_rate.png "Georgia's low checkout rate")
 **Exposures**
 - Exposures are important to implement so that analysts working in dbt know what downstream impacts changes to models will have outside of just dbt runs. 
 - If a run fails or a test errors, it’s important to know how that will affect things like critical reporting dashboards or a data science algorithm.

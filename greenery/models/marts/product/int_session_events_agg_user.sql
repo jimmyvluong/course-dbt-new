@@ -19,3 +19,4 @@ FROM {{ ref('stg_greenery__events') }}
 LEFT JOIN {{ ref('dim_users_addresses') }}
 ON stg_greenery__events.user_id = dim_users_addresses.user_id
 GROUP BY 1,2,3,4,5
+--- consider price of the products
